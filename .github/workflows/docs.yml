@@ -17,7 +17,6 @@ jobs:
           node-version: 20
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
-      - run: cd web
       - name: Install dependencies
         run: bun install
       - name: Build
@@ -25,7 +24,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: out/
+          path: docs/out/
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: build
