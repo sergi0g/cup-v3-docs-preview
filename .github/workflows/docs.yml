@@ -24,7 +24,7 @@ jobs:
       - name: Change base path (the hacky way)
         run: "sed -i 's/basePath: \"\"/basePath: \"\\/cup-v3-docs-preview\"/' next.config.ts"
       - name: This abomination should not be indexed
-        run: "echo -e 'User-agent: *\nDisallow: /'"
+        run: "echo -e 'User-agent: *\nDisallow: /' > public/robots.txt"
       - name: Build
         run: bun run build
       - name: Upload artifact
