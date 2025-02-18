@@ -1,0 +1,43 @@
+name: Deploy github pages
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: sergi0g/cup
+          token: ${{ secrets.GH_PAT }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+      - run: cd web
+      - name: Install dependencies
+        run: bun install
+      - name: Build
+        run: bun run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out/
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
