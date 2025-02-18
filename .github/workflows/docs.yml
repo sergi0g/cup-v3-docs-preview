@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: bun install
       - name: Change base path (the hacky way)
-        run: "sed -i 's/basePath: \"\"/basePath: \"\\/cup-v3-docs-preview\"/' /home/runner/work/cup-v3-docs-preview/cup-v3-docs-preview/docs/src/next.config.ts"
+        run: "sed -i 's/basePath: \"\"/basePath: \"\\/cup-v3-docs-preview\"/' /home/runner/work/cup-v3-docs-preview/cup-v3-docs-preview/src/next.config.ts"
       - name: Build
         run: bun run build
       - name: Upload artifact
